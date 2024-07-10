@@ -48,11 +48,13 @@ centerFrame.place(
 # создаем кнопку в центральной(игровой) рамке
 for x in range(settings.gridSize):
     for y in range(settings.gridSize):
-        c = Cell()
+        c = Cell(x, y)
         c.createButtonObj(centerFrame)
         c.cellButtonObj.grid(
             column=x,
             row=y,
         )
+Cell.randomizeMines()
+
 # закрываем окно игры
 root.mainloop()
