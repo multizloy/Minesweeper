@@ -1,6 +1,7 @@
 from tkinter import *
 import settings
 import utils
+from cell import Cell
 
 # создаем окно игры
 root = Tk()
@@ -44,5 +45,14 @@ centerFrame.place(
     x=utils.widthPerct(25),
     y=utils.heightPerct(25),
 )
+# создаем кнопку в центральной(игровой) рамке
+for x in range(settings.gridSize):
+    for y in range(settings.gridSize):
+        c = Cell()
+        c.createButtonObj(centerFrame)
+        c.cellButtonObj.grid(
+            column=y,
+            row=x,
+        )
 # закрываем окно игры
 root.mainloop()
