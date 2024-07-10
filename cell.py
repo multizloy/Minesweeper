@@ -10,6 +10,7 @@ class Cell:
 
     def __init__(self, x, y, isMine=False):
         self.isMine = isMine
+        self.isOpened = False
         self.cellButtonObj = None
         self.x = x
         self.y = y
@@ -74,14 +75,16 @@ class Cell:
         return counter
 
     def showCell(self):
-        Cell.cellsCount -= 1
-        self.cellButtonObj.configure(text=self.surroundedCellsMinesLength)
-        # замена числа оставшихся клеток
-        if Cell.cellCountLabelObj:
-            Cell.cellCountLabelObj.configure(
-                text=f"Cells left:{Cell.cellsCount}",
-            )
-
+        if not self.isOpened:
+            Cell.cellsCount -= 1
+            self.cellButtonObj.configure(text=self.surroundedCellsMinesLength)
+            # замена числа оставшихся клеток
+            if Cell.cellCountLabelObj:
+                Cell.cellCountLabelObj.configure(
+                    text=f"Cells left:{Cell.cellsCount}",
+                )
+        # отмечаем, открытые клетки
+        self.isOpened = True
     def getCellByAxis(self, x, y):
         # вернуть клетку со значением х,у
         for cell in Cell.all:
