@@ -51,8 +51,8 @@ for x in range(settings.gridSize):
         c = Cell()
         c.createButtonObj(centerFrame)
         c.cellButtonObj.grid(
-            column=y,
-            row=x,
+            column=x,
+            row=y,
         )
 # закрываем окно игры
 root.mainloop()
