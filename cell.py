@@ -41,6 +41,12 @@ class Cell:
                 for cellObj in self.surroundedCells:
                     cellObj.showCell()
             self.showCell()
+        # Отмена правого и левого клика мыши если клетка открыта
+        self.cellButtonObj.unbind("<Button-1>")
+        self.cellButtonObj.unbind("<Button-3>")
+        # если количество клеток равно количеству мин, игрок победил
+        if Cell.cellsCount == settings.minesCount:
+            ctypes.windll.user32.MessageBoxW(0, "You win!", "Game Over", 0)
 
     @staticmethod
     def createCellCountLabel(location):

@@ -54,7 +54,18 @@ for x in range(settings.gridSize):
             column=x,
             row=y,
         )
-
+# название игры и расположение ее на экране
+gameTitle = Label(
+    topFrame,
+    bg="Black",
+    fg="white",
+    text="Minesweeper game",
+    font=("", 48),
+)
+gameTitle.place(
+    x=utils.widthPerct(25),
+    y=0,
+)
 # выводим количество оставшихся клеток
 Cell.createCellCountLabel(leftFrame)
 Cell.cellCountLabelObj.place(
