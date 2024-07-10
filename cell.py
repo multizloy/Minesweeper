@@ -20,15 +20,18 @@ class Cell:
             location,
             width=12,
             height=4,
-            text=f"{self.x},{self.y}",
         )
         btn.bind("<Button-1>", self.leftClickAction)  # левая кнопка мыши
         btn.bind("<Button-3>", self.rightClickAction)  # правая кнопка мыши
         self.cellButtonObj = btn
 
     def leftClickAction(self, Event):
-        print(Event)
-        print("I am left clicked")
+        if self.isMine:
+            self.showMine()
+
+    def showMine(self):
+        # logic to interrupt the game
+        self.cellButtonObj.configure(bg="red")
 
     def rightClickAction(self, Event):
         print(Event)
