@@ -1,6 +1,9 @@
+import ctypes
+import sys
 from tkinter import Button, Label
 import random
 import settings
+from ctypes import *
 
 
 class Cell:
@@ -12,6 +15,7 @@ class Cell:
         self.isMine = isMine
         self.isOpened = False
         self.cellButtonObj = None
+        self.isMineCandidate = False
         self.x = x
         self.y = y
 
@@ -83,8 +87,13 @@ class Cell:
                 Cell.cellCountLabelObj.configure(
                     text=f"Cells left:{Cell.cellsCount}",
                 )
+            # функцианал автоматического перевода цвета, даже при ранее выбранной возможной мине
+            self.cellButtonObj.configure(
+                bg="SystemButtonFace",
+            )
         # отмечаем, открытые клетки
         self.isOpened = True
+
     def getCellByAxis(self, x, y):
         # вернуть клетку со значением х,у
         for cell in Cell.all:
@@ -94,10 +103,21 @@ class Cell:
     def showMine(self):
         # logic to interrupt the game
         self.cellButtonObj.configure(bg="red")
+        ctypes.windll.user32.MessageBoxW(0, "You clicked on a mine", "Game Over", 0)
+        sys.exit()
 
+    # функцианал на правую кнопку мыши для выделения клеток, в которых могут быть мины не открывая клетку
     def rightClickAction(self, Event):
-        print(Event)
-        print("I am right clicked")
+        if not self.isMineCandidate:
+            self.cellButtonObj.configure(
+                bg="orange",
+            )
+            self.isMineCandidate = True
+        else:
+            self.cellButtonObj.configure(
+                bg="SystemButtonFace",
+            )
+            self.isMineCandidate = False
 
     @staticmethod
     def randomizeMines():
