@@ -54,6 +54,13 @@ for x in range(settings.gridSize):
             column=x,
             row=y,
         )
+
+# выводим количество оставшихся клеток
+Cell.createCellCountLabel(leftFrame)
+Cell.cellCountLabelObj.place(
+    x=0,
+    y=0,
+)
 Cell.randomizeMines()
 
 # закрываем окно игры

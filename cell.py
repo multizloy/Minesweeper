@@ -1,10 +1,12 @@
-from tkinter import Button
+from tkinter import Button, Label
 import random
 import settings
 
 
 class Cell:
     all = []
+    cellsCount = settings.cellCount
+    cellCountLabelObj = None
 
     def __init__(self, x, y, isMine=False):
         self.isMine = isMine
@@ -29,7 +31,22 @@ class Cell:
         if self.isMine:
             self.showMine()
         else:
+            # если клетка имеет значение 0, значит мин вокруг нет. открываем клетки автоматически
+            if self.surroundedCellsMinesLength == 0:
+                for cellObj in self.surroundedCells:
+                    cellObj.showCell()
             self.showCell()
+
+    @staticmethod
+    def createCellCountLabel(location):
+        lbl = Label(
+            location,
+            text=f"Cells left:{Cell.cellsCount}",
+            width=12,
+            height=4,
+            font=("", 30),
+        )
+        Cell.cellCountLabelObj = lbl
 
     # описание окружающих клеток
     @property
@@ -57,9 +74,13 @@ class Cell:
         return counter
 
     def showCell(self):
-        self.cellButtonObj.configure(
-            text=self.surroundedCellsMinesLength,
-        )
+        Cell.cellsCount -= 1
+        self.cellButtonObj.configure(text=self.surroundedCellsMinesLength)
+        # замена числа оставшихся клеток
+        if Cell.cellCountLabelObj:
+            Cell.cellCountLabelObj.configure(
+                text=f"Cells left:{Cell.cellsCount}",
+            )
 
     def getCellByAxis(self, x, y):
         # вернуть клетку со значением х,у
